@@ -29,6 +29,13 @@ export default function HomePage() {
           <p className="p">Información de empleados (puesto, salario, activo, etc.).</p>
           <Link className="link" to="/empleados">Ir →</Link>
         </div>
+
+        <div className="card inner">
+          <h3 className="h3">Servicios</h3>
+          <p className="p">Servicios disponibles, horarios, encargado y número de pacientes.</p>
+          <Link className="link" to="/servicios">Ir →</Link>
+        </div>
+
       </div>
     </div>
   );

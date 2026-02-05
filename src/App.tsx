@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import InfoPersonalPage from "./pages/InfoPersonalPage";
 import AnimalesPage from "./pages/AnimalesPage";
 import EmpleadosPage from "./pages/EmpleadosPage";
+import ServiciosPage from "./pages/ServiciosPage.tsx";
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/info-personal" element={<InfoPersonalPage />} />
         <Route path="/animales" element={<AnimalesPage />} />
         <Route path="/empleados" element={<EmpleadosPage />} />
+        <Route path="/servicios" element={<ServiciosPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
