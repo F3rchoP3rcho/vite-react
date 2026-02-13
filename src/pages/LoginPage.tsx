@@ -1,21 +1,59 @@
 import React, { useState, FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 
 const FormularioUsuario: React.FC = () => {
   const [usuario, setUsuario] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [terminos, setTerminos] = useState<boolean>(false);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("📍 PASO 1: Se presionó el botón de Iniciar");
 
     if (!terminos) {
+      console.log("🛑 PASO 1.5: Falta aceptar los términos");
       alert("Debes aceptar los términos y condiciones");
       return;
     }
+    console.log("📍 PASO 2: Términos aceptados. Preparando envío...");
 
-    console.log("Usuario:", usuario);
-    console.log("Contraseña:", password);
-    alert("Inicio de sesión enviado");
+    try {
+      // ⚠️ IMPORTANTE: Si ya subiste tu backend a Vercel, cambia esta URL por la tuya.
+      // Ejemplo: "https://veterinaria-o702atrpp-sergio-avendanos-projects.vercel.app/api/login"
+      const URL_BACKEND = "http://localhost:3000/api/login"; 
+      console.log("📍 PASO 3: Intentando conectar con:", URL_BACKEND);
+
+      const response = await fetch(URL_BACKEND, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ 
+          usuario: usuario, 
+          contrasena: password 
+        }),
+      });
+
+      console.log("📍 PASO 4: El servidor respondió con status:", response.status);
+
+      const data = await response.json();
+      console.log("📍 PASO 5: Datos leídos del servidor:", data);
+
+      if (response.ok) {
+        console.log("✅ PASO 6: Login exitoso, guardando sesión...");
+        localStorage.setItem("usuario", usuario);
+        alert("¡Bienvenido!");
+        navigate("/");
+      } else {
+        console.log("❌ PASO 6: El servidor rechazó las credenciales");
+        alert(data.message || "Error al iniciar sesión");
+      }
+    } catch (error) {
+      console.error("🚨 PASO DE ERROR: Falló la conexión o la lectura de datos", error);
+      alert("No se pudo conectar con el servidor. Revisa la consola.");
+    }
   };
 
   return (
