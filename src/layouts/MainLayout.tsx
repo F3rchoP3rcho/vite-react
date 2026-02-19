@@ -23,8 +23,10 @@ export default function MainLayout() {
             <NavLink to="/animales" className="btn">Animales</NavLink>
             <NavLink to="/empleados" className="btn">Empleados</NavLink>
             <NavLink to="/servicios" className="btn">Servicios</NavLink>
+            <NavLink to="/citas" className="btn">Citas</NavLink>
           </nav>
         </div>
+
       </header>
 
       <main className="container">
