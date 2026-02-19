@@ -1,6 +1,19 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
+
 
 export default function MainLayout() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Si guardas sesión en localStorage, bórrala:
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    // Te manda al login
+    navigate("/login");
+  };
+
+
   return (
     <div style={{ minHeight: "100vh" }}>
       <header
@@ -25,9 +38,19 @@ export default function MainLayout() {
             <NavLink to="/servicios" className="btn">Servicios</NavLink>
             <NavLink to="/citas" className="btn">Citas</NavLink>
           </nav>
+          
+          <button
+            onClick={handleLogout}
+            className="btn"
+            style={{ marginLeft: "auto" }}
+          >
+            Cerrar sesión
+          </button>
+
         </div>
 
       </header>
+
 
       <main className="container">
         <Outlet />
