@@ -6,6 +6,7 @@ import AnimalesPage from "./pages/AnimalesPage";
 import EmpleadosPage from "./pages/EmpleadosPage";
 import ServiciosPage from "./pages/ServiciosPage.tsx";
 import LoginPage from "./pages/LoginPage.tsx";  
+import CitasPage from "./pages/CitasPage.tsx";
 
 // ==========================================
 // EL GUARDIA DE SEGURIDAD (Ruta Protegida)
@@ -38,6 +39,7 @@ export default function App() {
           <Route path="/animales" element={<AnimalesPage />} />
           <Route path="/empleados" element={<EmpleadosPage />} />
           <Route path="/servicios" element={<ServiciosPage />} />
+          <Route path="/citas" element={<CitasPage />} />
         </Route>
       </Route>
 
