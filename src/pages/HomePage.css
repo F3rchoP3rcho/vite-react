@@ -6,7 +6,7 @@
   --titulo-azul-claro: #38bdf8; /* Azul claro brillante para el título principal */
   --texto-subtitulo: #fefefe; /* Gris claro para el texto debajo del título principal */
   
-  --tarjeta-naranja-claro: #b34f21 ; /* Naranja clarito (tono durazno suave) */
+  --tarjeta-naranja-claro: #A304DE ; /* Naranja clarito (tono durazno suave) */
   --tarjeta-titulo: #ffffff; /* Azul un poco más fuerte para que se lea sobre el naranja */
   --tarjeta-texto: #ffffff; /* Gris oscuro para el texto de la tarjeta */
   
@@ -14,7 +14,7 @@
   --boton-texto: #000000; /* Texto oscuro en el botón */
   --boton-hover: #0284c7; /* Azul más oscuro al pasar el mouse */
 }
- 
+
 /* =========================================
    CONTENEDOR PRINCIPAL
 ========================================= */
