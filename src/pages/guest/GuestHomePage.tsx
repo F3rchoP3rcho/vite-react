@@ -20,13 +20,13 @@ export default function GuestHomePage() {
           <div>
             <h1 className="guestHeroTitle">Veterinaria 🐶🐱</h1>
             <p className="guestHeroText">
-              Bienvenido a nuestra pequeña Veterinaria. Aquí puedes ver nuestra información general y horarios.
-              Sabemos que tu mascota no es solo un animal,es parte esencial de tu familia
-              (y probablemente el dueño de la casa).
-              Nuestra misión es hacerte la vida más fácil y a ellos más feliz. Por eso, te ofrecemos nuestros
-              servicios y la posibilidad de agendar citas en cualquier momento que necesites.
-
-              Cualquier duda que tengas, no dudes preguntar en nuestra ubicación.
+              Bienvenido a nuestra pequeña Veterinaria. Aquí puedes ver nuestra información general y horarios.<br /><br />
+              Sabemos que tu mascota no es solo un animal, es parte esencial de tu familia
+              (y probablemente el dueño de la casa).<br /><br />
+              Nuestra misión es hacerte la vida más fácil y a ellos más feliz. 
+              Por eso, te ofrecemos nuestros servicios y la posibilidad de agendar citas 
+              en cualquier momento que necesites.<br /><br />
+              Cualquier duda que tengas, no dudes preguntar en nuestra ubicación.<br />
               Esperamos verte pronto.
             </p>
 
