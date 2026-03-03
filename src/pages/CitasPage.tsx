@@ -47,30 +47,37 @@ export default function CitasPage() {
   // ==========================================
   useEffect(() => {
 
-    if (!servicioId) return;
+  if (servicioId === null) {
+    setHorasDisponibles([]);
+    return;
+  }
 
-    const servicioSeleccionado = servicios.find(
-      s => s.id_servicios === servicioId
-    );
+  const servicioSeleccionado = servicios.find(
+    s => s.id_servicios === servicioId
+  );
 
-    if (!servicioSeleccionado) return;
+  if (!servicioSeleccionado) {
+    setHorasDisponibles([]);
+    return;
+  }
 
-    const nombre = servicioSeleccionado.tipos_servicios;
+  const nombre = servicioSeleccionado.tipos_servicios;
 
-    let inicio = 10;
-    let fin = 20;
+  let inicio = 10;
+  let fin = 20;
 
-    if (nombre === "Vacunación" || nombre === "Desparasitación") {
-      fin = 19;
-    }
+  if (nombre === "Vacunación" || nombre === "Desparasitación") {
+    fin = 19;
+  }
 
-    if (nombre === "Servicio de grooming") {
-      inicio = 9;
-    }
+  if (nombre === "Servicio de Grooming" || nombre === "Servicio de grooming") {
+    inicio = 9;
+  }
 
-    setHorasDisponibles(generarHoras(inicio, fin));
+  setHorasDisponibles(generarHoras(inicio, fin));
+  setHora("");
 
-  }, [servicioId, servicios]);
+}, [servicioId, servicios]);
 
   // ==========================================
   // Enviar formulario
