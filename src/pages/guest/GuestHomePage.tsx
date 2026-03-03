@@ -20,7 +20,14 @@ export default function GuestHomePage() {
           <div>
             <h1 className="guestHeroTitle">Veterinaria 🐶🐱</h1>
             <p className="guestHeroText">
-              Bienvenido. Aquí puedes ver servicios, horarios y la información general sin entrar como administrador.
+              Bienvenido a nuestra pequeña Veterinaria. Aquí puedes ver nuestra información general y horarios.
+              Sabemos que tu mascota no es solo un animal,es parte esencial de tu familia
+              (y probablemente el dueño de la casa).
+              Nuestra misión es hacerte la vida más fácil y a ellos más feliz. Por eso, te ofrecemos nuestros
+              servicios y la posibilidad de agendar citas en cualquier momento que necesites.
+
+              Cualquier duda que tengas, no dudes preguntar en nuestra ubicación.
+              Esperamos verte pronto.
             </p>
 
             <div className="guestActions">
