@@ -8,7 +8,7 @@ import InfoPersonalPage from "./pages/InfoPersonalPage";
 import AnimalesPage from "./pages/AnimalesPage";
 import EmpleadosPage from "./pages/EmpleadosPage";
 import ServiciosPage from "./pages/ServiciosPage.tsx";
-import LoginPage from "./pages/LoginPage.tsx";  
+import LoginPage from "./pages/auth/LoginPage.tsx";  
 import CitasPage from "./pages/CitasPage.tsx";
 
 // ==========================================
