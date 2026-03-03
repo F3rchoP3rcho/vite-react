@@ -30,6 +30,7 @@ export default function GuestLayout() {
           <nav style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
             <NavLink to="/guest" className="btn">Inicio</NavLink>
             <NavLink to="/guest/servicios" className="btn">Servicios</NavLink>
+            <NavLink to="/guest/citas" className="btn">Citas</NavLink>
 
           </nav>
 
