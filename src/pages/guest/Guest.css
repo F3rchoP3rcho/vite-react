@@ -330,3 +330,92 @@
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
 }
+
+/* ===== FIX: CARDS APLASTADAS (GUEST) ===== */
+
+/* Contenedor: que no se vaya a 5 columnas súper estrechas */
+.guestGrid{
+  display: grid;
+  gap: 22px;
+  margin-top: 22px;
+
+  /* Máximo 3 columnas en pantallas grandes */
+  grid-template-columns: repeat(3, minmax(320px, 1fr));
+  align-items: stretch;
+}
+
+/* En laptop/mediana: 2 columnas */
+@media (max-width: 1100px){
+  .guestGrid{
+    grid-template-columns: repeat(2, minmax(320px, 1fr));
+  }
+}
+
+/* En móvil: 1 columna */
+@media (max-width: 720px){
+  .guestGrid{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Cards más grandes y con altura mínima */
+.guestCard{
+  padding: 24px 22px;
+  border-radius: 18px;
+
+  min-height: 220px; /* para que no se vean “chaparras” */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+/* Títulos: que no se partan feo */
+.guestCard h3{
+  margin: 0;
+  font-size: 1.3rem;
+  line-height: 1.25;
+
+  /* evita cortes raros */
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+
+/* Párrafos dentro de cards */
+.guestCard p{
+  margin: 0;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* Chips / tags: que respiren y no se “aplasten” */
+.guestTag{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1.2;
+
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.14);
+
+  margin-right: 8px;
+  margin-bottom: 8px;
+
+  white-space: nowrap; /* que no se rompan en 2 líneas */
+}
+
+/* Si tus tags están dentro de un div, esto ayuda a que se acomoden bonito */
+.guestTagsRow{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
