@@ -8,7 +8,6 @@ interface Servicio {
 const API_URL = "https://veterinaria-steel.vercel.app/api";
 
 export default function CitasPage() {
-
   const [servicios, setServicios] = useState<Servicio[]>([]);
   const [servicioId, setServicioId] = useState<number | null>(null);
   const [fecha, setFecha] = useState("");
@@ -17,13 +16,13 @@ export default function CitasPage() {
   const [nombreMascota, setNombreMascota] = useState("");
 
   // ==========================================
-  // Cargar servicios
+  // Cargar servicios al montar el componente
   // ==========================================
   useEffect(() => {
     fetch(`${API_URL}/infoservicios`)
-      .then(res => res.json())
-      .then(data => setServicios(data))
-      .catch(err => console.error("Error cargando servicios:", err));
+      .then((res) => res.json())
+      .then((data) => setServicios(data))
+      .catch((err) => console.error("Error cargando servicios:", err));
   }, []);
 
   // ==========================================
@@ -33,121 +32,136 @@ export default function CitasPage() {
     e.preventDefault();
 
     if (servicioId === null) {
-      alert("Selecciona un servicio");
+      alert("Por favor, selecciona un servicio");
       return;
     }
+
+    // Objeto que se enviará a la API
+    const nuevaCita = {
+      servicio_id: servicioId,
+      fecha,
+      hora,
+      nombre_cliente: nombreCliente,
+      nombre_mascota: nombreMascota,
+    };
 
     try {
       const response = await fetch(`${API_URL}/citas`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          servicio_id: servicioId,
-          fecha,
-          hora,
-          nombre_cliente: nombreCliente,
-          nombre_mascota: nombreMascota
-        })
+        body: JSON.stringify(nuevaCita),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        alert("Cita agendada correctamente 🐾");
+        alert("¡Cita agendada correctamente! 🐾");
+        // Resetear el formulario
         setServicioId(null);
         setFecha("");
         setHora("");
         setNombreCliente("");
         setNombreMascota("");
       } else {
-        alert(data.message || "Error al agendar");
+        alert(data.message || "Hubo un error al agendar la cita");
       }
-
     } catch (error) {
-      console.error(error);
-      alert("Error de conexión");
+      console.error("Error de conexión:", error);
+      alert("No se pudo conectar con el servidor");
     }
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div style={{ padding: "2rem", maxWidth: "400px", margin: "0 auto", fontFamily: "sans-serif" }}>
       <h2>Agendar Cita</h2>
 
-      <form onSubmit={handleSubmit}>
-
+      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        
         {/* Servicio */}
-        <label>Servicio</label>
-        <select
-          value={servicioId ?? ""}
-          onChange={(e) =>
-            setServicioId(
-              e.target.value === "" ? null : Number(e.target.value)
-            )
-          }
-          required
-        >
-          <option value="">Selecciona</option>
-          {servicios.map(servicio => (
-            <option
-              key={servicio.id_servicios}
-              value={servicio.id_servicios}
-            >
-              {servicio.tipos_servicios}
-            </option>
-          ))}
-        </select>
-
-        <br /><br />
+        <div>
+          <label style={{ display: "block" }}>Servicio</label>
+          <select
+            style={{ width: "100%", padding: "8px" }}
+            value={servicioId ?? ""}
+            onChange={(e) =>
+              setServicioId(e.target.value === "" ? null : Number(e.target.value))
+            }
+            required
+          >
+            <option value="">Selecciona un servicio</option>
+            {servicios.map((servicio) => (
+              <option key={servicio.id_servicios} value={servicio.id_servicios}>
+                {servicio.tipos_servicios}
+              </option>
+            ))}
+          </select>
+        </div>
 
         {/* Fecha */}
-        <label>Fecha</label>
-        <input
-          type="date"
-          value={fecha}
-          onChange={(e) => setFecha(e.target.value)}
-          required
-        />
-
-        <br /><br />
+        <div>
+          <label style={{ display: "block" }}>Fecha</label>
+          <input
+            style={{ width: "100%", padding: "8px" }}
+            type="date"
+            value={fecha}
+            onChange={(e) => setFecha(e.target.value)}
+            required
+          />
+        </div>
 
         {/* Hora */}
-        <label>Hora</label>
-        <input
-        type="time"
-        value={hora}
-        onChange={(e) => setHora(e.target.value)}
-        required
-        step="60"
-        />
+        <div>
+          <label style={{ display: "block" }}>Hora (Completa HH:mm AM/PM)</label>
+          <input
+            style={{ width: "100%", padding: "8px" }}
+            type="time"
+            value={hora}
+            onChange={(e) => setHora(e.target.value)}
+            required
+          />
+        </div>
 
-        <br /><br />
+        {/* Nombre Cliente (Dueño) */}
+        <div>
+          <label style={{ display: "block" }}>Nombre del dueño</label>
+          <input
+            style={{ width: "100%", padding: "8px" }}
+            type="text"
+            placeholder="Ej. Juan Pérez"
+            value={nombreCliente}
+            onChange={(e) => setNombreCliente(e.target.value)}
+            required
+          />
+        </div>
 
-        {/* Nombre cliente */}
-        <label>Nombre del dueño</label>
-        <input
-          type="text"
-          value={nombreCliente}
-          onChange={(e) => setNombreCliente(e.target.value)}
-          required
-        />
+        {/* Nombre Mascota */}
+        <div>
+          <label style={{ display: "block" }}>Nombre de la mascota</label>
+          <input
+            style={{ width: "100%", padding: "8px" }}
+            type="text"
+            placeholder="Ej. Firulais"
+            value={nombreMascota}
+            onChange={(e) => setNombreMascota(e.target.value)}
+            required
+          />
+        </div>
 
-        <br /><br />
-
-        {/* Nombre mascota */}
-        <label>Nombre de la mascota</label>
-        <input
-          type="text"
-          value={nombreMascota}
-          onChange={(e) => setNombreMascota(e.target.value)}
-          required
-        />
-
-        <br /><br />
-
-        <button type="submit">
-          Agendar
+        <button 
+          type="submit" 
+          style={{ 
+            padding: "10px", 
+            backgroundColor: "#2ecc71", 
+            color: "white", 
+            border: "none", 
+            borderRadius: "4px",
+            cursor: "pointer",
+            fontWeight: "bold"
+          }}
+        >
+          Agendar Cita
         </button>
 
       </form>
