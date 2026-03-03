@@ -42,6 +42,9 @@ export default function CitasPage() {
     return horas;
   };
 
+  console.log("Servicio:", servicioSeleccionado);
+  console.log("Horas generadas:", generarHoras(inicio, fin));
+
   // ==========================================
   // Detectar servicio seleccionado
   // ==========================================
