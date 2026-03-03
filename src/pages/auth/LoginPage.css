@@ -1,0 +1,109 @@
+/* src/pages/auth/LoginPage.css */
+
+/* contenedor de toda la pantalla */
+.loginScreen {
+  min-height: 100vh;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+
+  /* fondo bonito sin usar tarjetas */
+  background:
+    radial-gradient(900px 500px at 20% 10%, rgba(90, 173, 255, 0.18), transparent 60%),
+    radial-gradient(700px 450px at 80% 30%, rgba(180, 120, 255, 0.16), transparent 60%),
+    linear-gradient(180deg, #0b1220 0%, #0a1020 100%);
+}
+
+/* caja del formulario (no "card", no tu class card) */
+.loginBox {
+  width: 100%;
+  max-width: 420px;
+  padding: 28px 22px;
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(10px);
+}
+
+/* titulo */
+.loginTitle {
+  font-size: 44px;
+  line-height: 1;
+  margin: 0 0 10px 0;
+  color: #ffffff;
+  letter-spacing: 0.2px;
+}
+
+/* texto pequeño */
+.loginSub {
+  margin: 0 0 18px 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 14px;
+}
+
+.loginLabel {
+  display: block;
+  margin: 14px 0 6px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 13px;
+}
+
+.loginInput {
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: 12px;
+  outline: none;
+
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.25);
+  color: #ffffff;
+}
+
+.loginInput:focus {
+  border-color: rgba(90, 173, 255, 0.55);
+  box-shadow: 0 0 0 3px rgba(90, 173, 255, 0.18);
+}
+
+.loginRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 12px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 13px;
+}
+
+.loginActions {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.loginBtn {
+  width: 100%;
+  padding: 12px 14px;
+  border: 0;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.loginBtnPrimary {
+  background: linear-gradient(90deg, rgba(90, 173, 255, 0.95), rgba(180, 120, 255, 0.95));
+  color: #0b1220;
+}
+
+.loginBtnGhost {
+  background: rgba(255, 255, 255, 0.10);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.loginFooter {
+  margin-top: 16px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 12px;
+}
