@@ -2,7 +2,8 @@ import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import HomePage from "./pages/HomePage";
 import GuestLayout from "./layouts/GuestLayout";
-import GuestHomePage from "./pages/GuestHomePage";
+import GuestHomePage from "./pages/guest/GuestHomePage.tsx";
+import GuestServiciosPage from "./pages/guest/GuestServiciosPage";
 import InfoPersonalPage from "./pages/InfoPersonalPage";
 import AnimalesPage from "./pages/AnimalesPage";
 import EmpleadosPage from "./pages/EmpleadosPage";
@@ -33,6 +34,7 @@ export default function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/guest" element={<GuestLayout />}>
         <Route index element={<GuestHomePage />} />
+        <Route path="servicios" element={<GuestServiciosPage />} />
       </Route>
 
       {/* 2. RUTAS PROTEGIDAS: Requieren inicio de sesión */}

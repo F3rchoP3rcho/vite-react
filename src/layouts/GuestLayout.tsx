@@ -29,9 +29,8 @@ export default function GuestLayout() {
 
           <nav style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
             <NavLink to="/guest" className="btn">Inicio</NavLink>
-            {/* En el futuro puedes agregar más rutas de invitado */}
-            {/* <NavLink to="/guest/servicios" className="btn">Servicios</NavLink> */}
-            {/* <NavLink to="/guest/citas" className="btn">Agendar cita</NavLink> */}
+            <NavLink to="/guest/servicios" className="btn">Servicios</NavLink>
+
           </nav>
 
           <button onClick={handleExit} className="btn" style={{ marginLeft: "auto" }}>
