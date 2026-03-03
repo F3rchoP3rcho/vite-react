@@ -15,87 +15,29 @@ export default function CitasPage() {
   const [hora, setHora] = useState("");
   const [nombreCliente, setNombreCliente] = useState("");
   const [nombreMascota, setNombreMascota] = useState("");
-  const [horasDisponibles, setHorasDisponibles] = useState<string[]>([]);
 
   // ==========================================
-  // Cargar servicios desde backend
+  // Cargar servicios
   // ==========================================
   useEffect(() => {
     fetch(`${API_URL}/infoservicios`)
       .then(res => res.json())
       .then(data => setServicios(data))
-      .catch(err => console.error(err));
+      .catch(err => console.error("Error cargando servicios:", err));
   }, []);
-
-  // ==========================================
-  // Generar horarios según servicio
-  // ==========================================
-  const generarHoras = (inicio: number, fin: number) => {
-
-    const horas: string[] = [];
-
-    for (let h = inicio; h < fin; h++) {
-      horas.push(`${String(h).padStart(2, "0")}:00`);
-      horas.push(`${String(h).padStart(2, "0")}:30`);
-    }
-
-    return horas;
-  };
-
-  console.log("Servicio:", servicioSeleccionado);
-  console.log("Horas generadas:", generarHoras(inicio, fin));
-
-  // ==========================================
-  // Detectar servicio seleccionado
-  // ==========================================
-  useEffect(() => {
-
-  if (servicioId === null) {
-    setHorasDisponibles([]);
-    return;
-  }
-
-  const servicioSeleccionado = servicios.find(
-    s => s.id_servicios === servicioId
-  );
-
-  if (!servicioSeleccionado) {
-    setHorasDisponibles([]);
-    return;
-  }
-
-  const nombre = servicioSeleccionado.tipos_servicios.toLowerCase();
-
-  let inicio = 10;
-  let fin = 20;
-
-  if (nombre.includes("vacun") || nombre.includes("despar")) {
-    fin = 19;
-  }
-
-  if (nombre.includes("groom")) {
-    inicio = 9;
-  }
-
-  setHorasDisponibles(generarHoras(inicio, fin));
-  setHora("");
-
-}, [servicioId, servicios]);
 
   // ==========================================
   // Enviar formulario
   // ==========================================
   const handleSubmit = async (e: React.FormEvent) => {
-
     e.preventDefault();
 
-    if (!servicioId) {
+    if (servicioId === null) {
       alert("Selecciona un servicio");
       return;
     }
 
     try {
-
       const response = await fetch(`${API_URL}/citas`, {
         method: "POST",
         headers: {
@@ -114,19 +56,19 @@ export default function CitasPage() {
 
       if (response.ok) {
         alert("Cita agendada correctamente 🐾");
+        setServicioId(null);
         setFecha("");
         setHora("");
         setNombreCliente("");
         setNombreMascota("");
       } else {
-        alert(data.message);
+        alert(data.message || "Error al agendar");
       }
 
     } catch (error) {
       console.error(error);
       alert("Error de conexión");
     }
-
   };
 
   return (
@@ -139,7 +81,11 @@ export default function CitasPage() {
         <label>Servicio</label>
         <select
           value={servicioId ?? ""}
-          onChange={(e) => setServicioId(Number(e.target.value))}
+          onChange={(e) =>
+            setServicioId(
+              e.target.value === "" ? null : Number(e.target.value)
+            )
+          }
           required
         >
           <option value="">Selecciona</option>
@@ -168,18 +114,14 @@ export default function CitasPage() {
 
         {/* Hora */}
         <label>Hora</label>
-        <select
+        <input
+          type="time"
           value={hora}
           onChange={(e) => setHora(e.target.value)}
           required
-        >
-          <option value="">Selecciona</option>
-          {horasDisponibles.map(h => (
-            <option key={h} value={h}>
-              {h}
-            </option>
-          ))}
-        </select>
+          min="09:00"
+          max="20:00"
+        />
 
         <br /><br />
 
