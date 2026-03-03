@@ -1,0 +1,108 @@
+/* ===== CONTENEDOR GENERAL ===== */
+.guestPage {
+  padding: 28px 0;
+}
+
+/* ===== HERO ===== */
+.guestHero {
+  padding: 28px;
+  border-radius: 18px;
+
+  background:
+    radial-gradient(600px 300px at 20% 0%, rgba(90, 173, 255, 0.15), transparent 60%),
+    radial-gradient(500px 300px at 90% 20%, rgba(180, 120, 255, 0.15), transparent 60%),
+    rgba(255, 255, 255, 0.05);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.guestHeroTitle {
+  margin: 0;
+  font-size: 36px;
+  letter-spacing: -0.3px;
+}
+
+.guestHeroText {
+  margin-top: 8px;
+  opacity: 0.85;
+  line-height: 1.6;
+}
+
+/* ===== BOTONES ===== */
+.guestBtn {
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.guestBtnPrimary {
+  background: linear-gradient(90deg, #5aadff, #b478ff);
+  color: #0b1220;
+}
+
+.guestBtnPrimary:hover {
+  opacity: 0.9;
+}
+
+.guestBtnGhost {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.guestActions {
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ===== GRID ===== */
+.guestGrid {
+  display: grid;
+  gap: 18px;
+  margin-top: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+/* ===== CARDS ===== */
+.guestCard {
+  padding: 18px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: 0.2s ease;
+}
+
+.guestCard:hover {
+  transform: translateY(-4px);
+}
+
+/* ===== TAGS ===== */
+.guestTag {
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* ===== BUSCADOR ===== */
+.guestInput {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.2);
+  color: white;
+  outline: none;
+}
+
+.guestInput:focus {
+  border-color: #5aadff;
+  box-shadow: 0 0 0 3px rgba(90, 173, 255, 0.2);
+}

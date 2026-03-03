@@ -1,31 +1,31 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import "./guest.css";
 
 type Servicio = {
-  id_servicios: string;
+  id_servicios: string | number;
   tipos_servicios: string;
   Disponibilidad: string;
   Horario: string;
   Encargado: string;
-  // Numero_pacientes: string;  // <- NO lo usamos en clientes
 };
 
 export default function GuestServiciosPage() {
   const [data, setData] = useState<Servicio[]>([]);
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string>("");
+  const [q, setQ] = useState<string>("");
 
   useEffect(() => {
-    document.title = "Servicios (Clientes) | Veterinaria";
-
     const consultar = async () => {
       try {
         const res = await fetch("https://veterinaria-steel.vercel.app/api/infoservicios");
         if (!res.ok) throw new Error("Error al consultar la API");
-
         const json = await res.json();
-        setData(json);
+
+        // Asegura que sea arreglo
+        setData(Array.isArray(json) ? json : []);
       } catch (e) {
-        setError("No se pudo obtener la información de servicios");
+        setError("No se pudo obtener la información de servicios.");
       } finally {
         setLoading(false);
       }
@@ -34,27 +34,73 @@ export default function GuestServiciosPage() {
     consultar();
   }, []);
 
-  return (
-    <div className="card page">
-      <h1 className="h1">Servicios</h1>
-      <p className="p">Servicios disponibles para clientes.</p>
+  const filtered = useMemo(() => {
+    const term = q.trim().toLowerCase();
+    if (!term) return data;
 
-      {loading && <p className="p">Cargando información...</p>}
-      {error && <p className="error">{error}</p>}
+    return data.filter((s) =>
+      `${s.tipos_servicios} ${s.Disponibilidad} ${s.Horario} ${s.Encargado}`
+        .toLowerCase()
+        .includes(term)
+    );
+  }, [data, q]);
 
-      {/* Vista tipo cards para clientes */}
-      {data.length > 0 && (
-        <div className="grid">
-          {data.map((s) => (
-            <div key={s.id_servicios} className="card inner">
-              <h3 className="h3" style={{ marginBottom: 6 }}>{s.tipos_servicios}</h3>
-              <p className="p">Disponibilidad: {s.Disponibilidad}</p>
-              <p className="p">Horario: {s.Horario}</p>
-              <p className="p">Encargado: {s.Encargado}</p>
-            </div>
-          ))}
+  if (loading) {
+    return (
+      <div className="guestPage">
+        <div className="guestHero">
+          <h1 className="guestHeroTitle">Servicios</h1>
+          <p className="guestHeroText">Cargando...</p>
         </div>
-      )}
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="guestPage">
+        <div className="guestHero">
+          <h1 className="guestHeroTitle">Servicios</h1>
+          <p className="guestHeroText">{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="guestPage">
+      <div className="guestHero">
+        <h1 className="guestHeroTitle">Servicios disponibles</h1>
+        <p className="guestHeroText">
+          Consulta disponibilidad y horario de cada servicio.
+        </p>
+
+        <div style={{ marginTop: 14 }}>
+          <input
+            className="guestInput"
+            placeholder="Buscar servicio..."
+            value={q}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQ(e.target.value)}
+          />
+        </div>
+      </div>
+
+      <div className="guestGrid">
+        {filtered.map((s) => (
+          <div key={s.id_servicios} className="guestCard">
+            <h3>{s.tipos_servicios}</h3>
+
+            <div style={{ margin: "8px 0" }}>
+              <span className="guestTag">{s.Disponibilidad}</span>
+              <span className="guestTag">{s.Horario}</span>
+            </div>
+
+            <p>
+              <b>Encargado:</b> {s.Encargado}
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
