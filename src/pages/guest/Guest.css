@@ -106,3 +106,201 @@
   border-color: #5aadff;
   box-shadow: 0 0 0 3px rgba(90, 173, 255, 0.2);
 }
+
+/* ====== SECCIONES / ESTRUCTURA ====== */
+.guestPage {
+  padding: 22px 0;
+}
+
+.guestSection {
+  margin-top: 16px;
+}
+
+.guestHeaderRow {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.guestTitle {
+  margin: 0;
+  font-size: 34px;
+  letter-spacing: -0.3px;
+}
+
+.guestSubtitle {
+  margin: 6px 0 0 0;
+  opacity: 0.85;
+  line-height: 1.6;
+}
+
+/* ====== HERO / BANNER ====== */
+.guestHero {
+  padding: 22px;
+  border-radius: 18px;
+  background:
+    radial-gradient(700px 350px at 15% 0%, rgba(90, 173, 255, 0.16), transparent 60%),
+    radial-gradient(700px 350px at 90% 10%, rgba(180, 120, 255, 0.14), transparent 60%),
+    rgba(255, 255, 255, 0.05);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.guestPills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.guestPill {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+/* ====== GRID ====== */
+.guestGrid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.guestCol4 { grid-column: span 4; }
+.guestCol6 { grid-column: span 6; }
+.guestCol12 { grid-column: span 12; }
+
+@media (max-width: 900px) {
+  .guestCol4, .guestCol6 { grid-column: span 12; }
+}
+
+/* ====== CARD ====== */
+.guestCard {
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: transform .15s ease, border-color .15s ease;
+}
+
+.guestCard:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255,255,255,0.14);
+}
+
+/* ====== INPUT ====== */
+.guestInputRow {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.guestInput {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.20);
+  color: #fff;
+  outline: none;
+}
+
+.guestInput:focus {
+  border-color: rgba(90, 173, 255, 0.55);
+  box-shadow: 0 0 0 3px rgba(90, 173, 255, 0.18);
+}
+
+/* ====== BOTONES (sin depender de .btn global) ====== */
+.guestBtnRow {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.guestBtn {
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 0;
+  cursor: pointer;
+  font-weight: 700;
+  transition: opacity .15s ease, transform .15s ease;
+}
+
+.guestBtn:active { transform: translateY(1px); }
+
+.guestBtnPrimary {
+  background: linear-gradient(90deg, #5aadff, #b478ff);
+  color: #0b1220;
+}
+
+.guestBtnGhost {
+  background: rgba(255,255,255,0.10);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.14);
+}
+
+/* ====== ESTADOS ====== */
+.guestState {
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  opacity: 0.9;
+}
+
+/* ===== FORM (CITAS) ===== */
+.guestForm {
+  margin-top: 18px;
+  display: grid;
+  gap: 14px;
+}
+
+.guestField {
+  display: grid;
+  gap: 6px;
+}
+
+.guestLabel {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.guestRow2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 800px) {
+  .guestRow2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.guestSelect {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.2);
+  color: white;
+  outline: none;
+}
+
+.guestSelect:focus {
+  border-color: #5aadff;
+  box-shadow: 0 0 0 3px rgba(90, 173, 255, 0.2);
+}
+
+.guestDivider {
+  margin: 22px 0 0;
+  border: 0;
+  height: 1px;
+  background: rgba(255,255,255,0.10);
+}
