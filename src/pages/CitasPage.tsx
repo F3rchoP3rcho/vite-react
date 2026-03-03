@@ -64,16 +64,16 @@ export default function CitasPage() {
     return;
   }
 
-  const nombre = servicioSeleccionado.tipos_servicios;
+  const nombre = servicioSeleccionado.tipos_servicios.toLowerCase();
 
   let inicio = 10;
   let fin = 20;
 
-  if (nombre === "Vacunación" || nombre === "Desparasitación") {
+  if (nombre.includes("vacun") || nombre.includes("despar")) {
     fin = 19;
   }
 
-  if (nombre === "Servicio de Grooming" || nombre === "Servicio de grooming") {
+  if (nombre.includes("groom")) {
     inicio = 9;
   }
 
