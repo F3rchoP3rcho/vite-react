@@ -8,6 +8,7 @@ export default function MainLayout() {
     // Si guardas sesión en localStorage, bórrala:
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("usuario");
 
     // Te manda al login
     navigate("/login");

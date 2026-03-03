@@ -1,6 +1,7 @@
 import React, { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 const FormularioUsuario: React.FC = () => {
   const [usuario, setUsuario] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -100,6 +101,16 @@ const FormularioUsuario: React.FC = () => {
         <br />
 
         <button type="submit">Iniciar</button>
+        <button
+          type="button"
+          onClick={() => {
+            localStorage.setItem("guest", "1"); // opcional
+            navigate("/guest");
+          }}
+          style={{ marginTop: 10 }}
+        >
+          Iniciar como invitado
+        </button>
       </form>
     </div>
   );

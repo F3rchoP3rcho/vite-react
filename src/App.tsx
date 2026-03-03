@@ -1,6 +1,8 @@
 import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import HomePage from "./pages/HomePage";
+import GuestLayout from "./layouts/GuestLayout";
+import GuestHomePage from "./pages/GuestHomePage";
 import InfoPersonalPage from "./pages/InfoPersonalPage";
 import AnimalesPage from "./pages/AnimalesPage";
 import EmpleadosPage from "./pages/EmpleadosPage";
@@ -29,6 +31,9 @@ export default function App() {
     <Routes>
       {/* 1. RUTA PÚBLICA: Cualquiera puede ver el Login */}
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/guest" element={<GuestLayout />}>
+        <Route index element={<GuestHomePage />} />
+      </Route>
 
       {/* 2. RUTAS PROTEGIDAS: Requieren inicio de sesión */}
       <Route element={<ProtectedRoute />}>
