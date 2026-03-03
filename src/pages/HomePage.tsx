@@ -38,8 +38,8 @@ export default function HomePage() {
         </div>
 
         <div className="card inner">
-          <h3 className="h3">Servicios</h3>
-          <p className="p">Agenda de citas.</p>
+          <h3 className="h3">Citas</h3>
+          <p className="p">Agendar citas paea los servicios veterinarios.</p>
           <Link className="link" to="/citas">Ir →</Link>
         </div>
 
