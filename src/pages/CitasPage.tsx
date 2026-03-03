@@ -5,35 +5,22 @@ interface Servicio {
   tipos_servicios: string;
 }
 
-interface Cita {
-  id?: number;         // Ajustado para mayor compatibilidad
-  id_citas?: number;   // Ajustado para mayor compatibilidad
-  servicio_id: number;
-  fecha: string;
-  hora: string;
-  nombre_cliente: string;
-  nombre_mascota: string;
-  tipos_servicios?: string;
-}
-
 const API_URL = "https://veterinaria-steel.vercel.app/api";
 
 export default function CitasPage() {
   const [servicios, setServicios] = useState<Servicio[]>([]);
-  const [citas, setCitas] = useState<Cita[]>([]);
+  const [citas, setCitas] = useState<any[]>([]); // Usamos any temporalmente para investigar el objeto
   const [servicioId, setServicioId] = useState<number | null>(null);
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
   const [nombreCliente, setNombreCliente] = useState("");
   const [nombreMascota, setNombreMascota] = useState("");
 
-  // ==========================================
-  // Cargar datos (Servicios y Citas)
-  // ==========================================
   const cargarCitas = async () => {
     try {
       const res = await fetch(`${API_URL}/citas`);
       const data = await res.json();
+      console.log("Datos que llegan de la DB:", data); // ESTO NOS DIRÁ EL NOMBRE DEL ID
       setCitas(data);
     } catch (err) {
       console.error("Error cargando citas:", err);
@@ -41,23 +28,16 @@ export default function CitasPage() {
   };
 
   useEffect(() => {
-    fetch(`${API_URL}/infoservicios`)
-      .then((res) => res.json())
-      .then((data) => setServicios(data))
-      .catch((err) => console.error("Error cargando servicios:", err));
-
+    fetch(`${API_URL}/infoservicios`).then(res => res.json()).then(setServicios);
     cargarCitas();
   }, []);
 
-  // ==========================================
-  // Enviar formulario
-  // ==========================================
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (servicioId === null) return alert("Selecciona un servicio");
+    if (servicioId === null) return alert("Selecciona servicio");
 
     try {
-      const response = await fetch(`${API_URL}/citas`, {
+      const res = await fetch(`${API_URL}/citas`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -69,8 +49,8 @@ export default function CitasPage() {
         }),
       });
 
-      if (response.ok) {
-        alert("¡Cita agendada! 🐾");
+      if (res.ok) {
+        alert("Cita agendada 🐾");
         setServicioId(null); setFecha(""); setHora(""); setNombreCliente(""); setNombreMascota("");
         cargarCitas();
       }
@@ -79,104 +59,74 @@ export default function CitasPage() {
     }
   };
 
-  // ==========================================
-  // Eliminar Cita (Corregido)
-  // ==========================================
-  const eliminarCita = async (id: number | undefined) => {
+  const eliminarCita = async (citaObjeto: any) => {
+    // Intentamos encontrar el ID buscando nombres comunes
+    const id = citaObjeto.id || citaObjeto.id_citas || citaObjeto.id_cita;
+
     if (!id) {
-      alert("Error: No se encontró el ID de esta cita en la base de datos.");
+      console.log("Objeto de la cita sin ID:", citaObjeto);
+      alert("Error: No se detecta un ID en el objeto. Revisa la consola.");
       return;
     }
 
-    if (!confirm("¿Estás seguro de eliminar esta cita?")) return;
+    if (!confirm("¿Eliminar cita?")) return;
 
     try {
-      const response = await fetch(`${API_URL}/citas/${id}`, {
-        method: "DELETE",
-      });
-
-      if (response.ok) {
-        // Filtramos buscando ambos posibles nombres de ID para estar seguros
-        setCitas(citas.filter((cita) => (cita.id !== id && cita.id_citas !== id)));
+      const res = await fetch(`${API_URL}/citas/${id}`, { method: "DELETE" });
+      if (res.ok) {
+        setCitas(citas.filter(c => (c.id || c.id_citas || c.id_cita) !== id));
       } else {
-        alert("El servidor no permitió borrar la cita. Revisa la ruta DELETE.");
+        alert("Error en el servidor al borrar");
       }
     } catch (error) {
-      console.error("Error al borrar:", error);
-      alert("Error de conexión al intentar eliminar.");
+      alert("Error de conexión");
     }
   };
 
   return (
     <div style={{ padding: "2rem", color: "white", backgroundColor: "#0f172a", minHeight: "100vh", fontFamily: "sans-serif" }}>
-      <h2 style={{ borderBottom: "1px solid #334155", paddingBottom: "10px" }}>Agendar Cita</h2>
+      <h2>Agendar Cita</h2>
       
-      <form onSubmit={handleSubmit} style={{ maxWidth: "500px", marginBottom: "3rem", display: "grid", gap: "15px" }}>
-        <div>
-          <label style={{ display: "block", marginBottom: "5px" }}>Servicio</label>
-          <select style={{ width: "100%", padding: "8px" }} value={servicioId ?? ""} onChange={(e) => setServicioId(Number(e.target.value))} required>
-            <option value="">Selecciona</option>
-            {servicios.map(s => <option key={s.id_servicios} value={s.id_servicios}>{s.tipos_servicios}</option>)}
-          </select>
-        </div>
+      <form onSubmit={handleSubmit} style={{ maxWidth: "500px", marginBottom: "3rem", display: "grid", gap: "10px" }}>
+        <label>Servicio</label>
+        <select value={servicioId ?? ""} onChange={(e) => setServicioId(Number(e.target.value))} required>
+          <option value="">Selecciona</option>
+          {servicios.map(s => <option key={s.id_servicios} value={s.id_servicios}>{s.tipos_servicios}</option>)}
+        </select>
 
-        <div>
-          <label style={{ display: "block", marginBottom: "5px" }}>Fecha</label>
-          <input style={{ width: "100%", padding: "8px" }} type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
-        </div>
+        <label>Fecha</label>
+        <input type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
 
-        <div>
-          <label style={{ display: "block", marginBottom: "5px" }}>Hora</label>
-          <input style={{ width: "100%", padding: "8px" }} type="time" value={hora} onChange={(e) => setHora(e.target.value)} required />
-        </div>
+        <label>Hora</label>
+        <input type="time" value={hora} onChange={(e) => setHora(e.target.value)} required />
 
-        <div>
-          <label style={{ display: "block", marginBottom: "5px" }}>Nombre del dueño</label>
-          <input style={{ width: "100%", padding: "8px" }} type="text" value={nombreCliente} onChange={(e) => setNombreCliente(e.target.value)} required />
-        </div>
+        <label>Dueño</label>
+        <input type="text" value={nombreCliente} onChange={(e) => setNombreCliente(e.target.value)} required />
 
-        <div>
-          <label style={{ display: "block", marginBottom: "5px" }}>Nombre de la mascota</label>
-          <input style={{ width: "100%", padding: "8px" }} type="text" value={nombreMascota} onChange={(e) => setNombreMascota(e.target.value)} required />
-        </div>
+        <label>Mascota</label>
+        <input type="text" value={nombreMascota} onChange={(e) => setNombreMascota(e.target.value)} required />
 
-        <button type="submit" style={{ padding: "10px", backgroundColor: "#3b82f6", color: "white", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "bold" }}>
-          Agendar
-        </button>
+        <button type="submit" style={{ background: "#3b82f6", color: "white", padding: "10px", cursor: "pointer", border: "none" }}>Agendar</button>
       </form>
 
-      <h3 style={{ borderBottom: "1px solid #334155", paddingBottom: "10px" }}>Historial de Citas</h3>
-      <div style={{ display: "grid", gap: "1rem", marginTop: "1rem" }}>
-        {citas.length === 0 ? (
-          <p style={{ color: "#94a3b8" }}>No hay citas registradas todavía.</p>
-        ) : (
-          citas.map((cita) => {
-            // Intentamos obtener el ID sea cual sea su nombre en la DB
-            const idCita = cita.id || cita.id_citas;
-            
-            return (
-              <div 
-                key={idCita || Math.random()} 
-                style={{ border: "1px solid #334155", padding: "1rem", borderRadius: "8px", display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "#1e293b" }}
-              >
-                <div>
-                  <strong style={{ fontSize: "1.1rem", color: "#38bdf8" }}>{cita.nombre_mascota}</strong> 
-                  <span style={{ color: "#94a3b8", marginLeft: "10px" }}>({cita.tipos_servicios || 'Consulta'})</span>
-                  <div style={{ marginTop: "5px", fontSize: "0.9rem" }}>
-                    <span>📅 {cita.fecha.split('T')[0]}</span> | <span>⏰ {cita.hora}</span>
-                  </div>
-                  <div style={{ fontSize: "0.8rem", color: "#94a3b8" }}>👤 Dueño: {cita.nombre_cliente}</div>
-                </div>
-                <button 
-                  onClick={() => eliminarCita(idCita)}
-                  style={{ backgroundColor: "#ef4444", color: "white", border: "none", padding: "8px 15px", borderRadius: "4px", cursor: "pointer" }}
-                >
-                  Eliminar
-                </button>
-              </div>
-            );
-          })
-        )}
+      <hr />
+
+      <h3>Historial</h3>
+      <div style={{ display: "grid", gap: "10px", marginTop: "1rem" }}>
+        {citas.map((cita, index) => (
+          <div key={index} style={{ border: "1px solid #334155", padding: "1rem", borderRadius: "8px", display: "flex", justifyContent: "space-between", backgroundColor: "#1e293b" }}>
+            <div>
+              <strong>{cita.nombre_mascota}</strong> - {cita.tipos_servicios}<br />
+              <small>📅 {cita.fecha?.split('T')[0]} | 👤 {cita.nombre_cliente}</small>
+            </div>
+            <button 
+              onClick={() => eliminarCita(cita)} // Pasamos TODO el objeto
+              style={{ background: "#ef4444", color: "white", border: "none", padding: "5px 10px", cursor: "pointer" }}
+            >
+              Eliminar
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );
