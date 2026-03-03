@@ -1,295 +1,353 @@
 /* =========================================
-   VARIABLES DE COLOR (Nueva Paleta)
+   ESTILO ELEGANTE (SIN CAMBIAR JSX)
+   Mantiene: .page .h1 .p .grid .card.inner .link + clases de citas
 ========================================= */
-:root {
-  --fondo-oscuro: #1e293b; /* Fondo azul noche muy oscuro para dar contraste */
-  --titulo-azul-claro: #38bdf8; /* Azul claro brillante para el título principal */
-  --texto-subtitulo: #fefefe; /* Gris claro para el texto debajo del título principal */
-  
-  --tarjeta-naranja-claro: #A304DE ; /* Naranja clarito (tono durazno suave) */
-  --tarjeta-titulo: #ffffff; /* Azul un poco más fuerte para que se lea sobre el naranja */
-  --tarjeta-texto: #ffffff; /* Gris oscuro para el texto de la tarjeta */
-  
-  --boton-bg: #feffff; /* Botón azul claro */
-  --boton-texto: #000000; /* Texto oscuro en el botón */
-  --boton-hover: #0284c7; /* Azul más oscuro al pasar el mouse */
+
+:root{
+  --bg-0: #0a1020;
+  --bg-1: #0b1220;
+
+  --text: rgba(255,255,255,0.92);
+  --muted: rgba(255,255,255,0.72);
+
+  --accent: #38bdf8;      /* azul */
+  --accent2: #b478ff;     /* violeta suave */
+  --border: rgba(255,255,255,0.10);
+
+  --glass: rgba(255,255,255,0.06);
+  --glass-strong: rgba(255,255,255,0.09);
+
+  --shadow: 0 12px 30px rgba(0,0,0,0.35);
+  --shadow2: 0 18px 45px rgba(0,0,0,0.45);
+
+  --radius: 18px;
 }
 
 /* =========================================
    CONTENEDOR PRINCIPAL
 ========================================= */
-.page {
-  background-color: var(--fondo-oscuro);
+.page{
   min-height: 100vh;
-  padding: 50px 20px;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  padding: 42px 18px;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   box-sizing: border-box;
+
+  background:
+    radial-gradient(900px 500px at 18% 8%, rgba(56,189,248,0.16), transparent 60%),
+    radial-gradient(850px 520px at 82% 18%, rgba(180,120,255,0.14), transparent 60%),
+    linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 100%);
+  color: var(--text);
 }
 
-/* Títulos principales del Dashboard */
-.page > .h1 {
+/* TITULO Y SUBTITULO */
+.page > .h1{
   text-align: center;
-  color: var(--titulo-azul-claro);
-  font-size: 3rem; /* Un poco más grande para que destaque */
-  margin-top: 0;
-  margin-bottom: 10px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* Sombrita para que resalte más del fondo */
+  color: var(--accent);
+  font-size: clamp(2.2rem, 3.3vw, 3.2rem);
+  margin: 0 0 10px 0;
+  letter-spacing: -0.6px;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.40);
 }
 
-.page > .p {
+.page > .p{
   text-align: center;
-  color: var(--texto-subtitulo);
-  font-size: 1.1rem;
-  margin-bottom: 50px;
+  color: var(--muted);
+  font-size: 1.05rem;
+  margin: 0 0 34px 0;
 }
 
 /* =========================================
    GRID DE MÓDULOS
 ========================================= */
-.grid {
+.grid{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 25px;
-  max-width: 1100px;
+  gap: 18px;
+  max-width: 1120px;
   margin: 0 auto;
 }
 
 /* =========================================
-   TARJETAS DE CADA MÓDULO (.card.inner)
+   TARJETAS (.card.inner)
+   Mantiene tu clase, solo cambia look
 ========================================= */
-.card.inner {
-  background-color: var(--tarjeta-naranja-claro);
-  border-radius: 16px;
-  padding: 30px 25px;
-  /* Sombra un poco más fuerte porque el fondo es oscuro */
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.card.inner{
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 22px;
+  box-shadow: var(--shadow);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
   display: flex;
   flex-direction: column;
-  border-top: 6px solid var(--titulo-azul-claro); 
+  position: relative;
+  overflow: hidden;
 }
 
-/* Efecto al pasar el mouse */
-.card.inner:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+/* barra decorativa arriba */
+.card.inner::before{
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  opacity: 0.95;
 }
 
-/* Título dentro de la tarjeta (Ej: Animales, Empleados) */
-.card.inner .h3 {
-  color: var(--tarjeta-titulo);
-  font-size: 1.5rem;
-  margin-top: 0;
-  margin-bottom: 15px;
+/* brillo suave */
+.card.inner::after{
+  content: "";
+  position: absolute;
+  inset: -60px -60px auto auto;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(255,255,255,0.12), transparent 60%);
+  transform: rotate(20deg);
+  pointer-events: none;
 }
 
-/* Texto de descripción de la tarjeta */
-.card.inner .p {
-  color: var(--tarjeta-texto);
-  font-size: 0.95rem;
+.card.inner:hover{
+  transform: translateY(-6px);
+  box-shadow: var(--shadow2);
+  border-color: rgba(255,255,255,0.16);
+}
+
+/* TÍTULO DENTRO */
+.card.inner .h3{
+  color: rgba(255,255,255,0.95);
+  font-size: 1.45rem;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.2px;
+}
+
+/* TEXTO DENTRO */
+.card.inner .p{
+  color: rgba(255,255,255,0.78);
+  font-size: 0.98rem;
   line-height: 1.6;
-  margin-bottom: 25px;
+  margin: 0 0 18px 0;
   flex-grow: 1;
 }
 
 /* =========================================
-   BOTONES / ENLACES (.link)
+   BOTÓN / LINK (.link)
 ========================================= */
-.link {
-  display: inline-block;
-  text-align: center;
-  background-color: var(--boton-bg);
-  color: var(--boton-texto);
+.link{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   text-decoration: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-weight: bold;
-  transition: all 0.3s ease;
+
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+
+  background: linear-gradient(90deg, rgba(56,189,248,0.95), rgba(180,120,255,0.95));
+  color: #0b1220;
+
+  border: 0;
+  box-shadow: 0 10px 18px rgba(0,0,0,0.25);
+  transition: transform .15s ease, opacity .15s ease;
   align-self: flex-start;
 }
 
-.link:hover {
-  background-color: var(--boton-hover);
-  color: #ffffff; /* El texto se vuelve blanco al pasar el mouse */
-}
-
-/* Heredamos variables de tu paleta principal para mantener consistencia */
-.citas-page {
-  background-color: #1e293b; /* Fondo oscuro */
-  min-height: 100vh;
-  padding: 50px 20px;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  color: #ffffff;
-  box-sizing: border-box;
-}
-
-.citas-titulo {
-  color: #38bdf8; /* Azul claro para los títulos */
-  border-bottom: 2px solid #38bdf8;
-  padding-bottom: 10px;
-  margin-bottom: 25px;
-  font-size: 2rem;
+.link:hover{
+  opacity: 0.92;
+  transform: translateY(-1px);
 }
 
 /* =========================================
-   FORMULARIO DE CITAS
+   CITAS (manteniendo tus clases)
+   Solo se estiliza más elegante.
 ========================================= */
-.citas-form {
-  background-color: #A304DE; /* El morado vibrante de tus tarjetas */
-  padding: 30px;
-  border-radius: 16px;
-  max-width: 600px;
+.citas-page{
+  background:
+    radial-gradient(900px 500px at 18% 8%, rgba(56,189,248,0.16), transparent 60%),
+    radial-gradient(850px 520px at 82% 18%, rgba(180,120,255,0.14), transparent 60%),
+    linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 100%);
+  min-height: 100vh;
+  padding: 42px 18px;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text);
+  box-sizing: border-box;
+}
+
+.citas-titulo{
+  color: var(--accent);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  padding-bottom: 12px;
+  margin: 0 0 22px 0;
+  font-size: 2rem;
+  letter-spacing: -0.3px;
+}
+
+/* Formulario */
+.citas-form{
+  background: var(--glass);
+  border: 1px solid var(--border);
+  padding: 22px;
+  border-radius: var(--radius);
+  max-width: 680px;
   display: grid;
-  gap: 20px;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-  margin-bottom: 40px;
+  gap: 16px;
+  box-shadow: var(--shadow);
+  margin-bottom: 28px;
 }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.form-group label {
-  color: #ffffff;
-  font-weight: bold;
+.form-group label{
+  color: rgba(255,255,255,0.85);
+  font-weight: 700;
   font-size: 0.95rem;
 }
 
-.form-row {
+.form-row{
   display: flex;
-  gap: 15px;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
-.form-row .form-group {
+.form-row .form-group{
   flex: 1;
+  min-width: 220px;
 }
 
-.form-control {
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  background-color: #ffffff;
-  color: #000000;
+.form-control{
+  padding: 12px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.22);
+  color: #fff;
   font-size: 1rem;
   outline: none;
 }
 
-.form-control:focus {
-  box-shadow: 0 0 0 3px #38bdf8;
+.form-control:focus{
+  border-color: rgba(56,189,248,0.55);
+  box-shadow: 0 0 0 3px rgba(56,189,248,0.18);
 }
 
-/* Botón del formulario */
-.btn-agendar {
-  background-color: #ffffff;
-  color: #000000;
-  padding: 14px;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  font-size: 1.1rem;
+/* Botón agendar */
+.btn-agendar{
+  background: linear-gradient(90deg, rgba(56,189,248,0.95), rgba(180,120,255,0.95));
+  color: #0b1220;
+  padding: 12px 14px;
+  border: 0;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 1.05rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 10px;
+  transition: transform .15s ease, opacity .15s ease;
+  margin-top: 6px;
 }
 
-.btn-agendar:hover {
-  background-color: #0284c7;
-  color: #ffffff;
+.btn-agendar:hover{
+  opacity: 0.92;
+  transform: translateY(-1px);
 }
 
-/* =========================================
-   HISTORIAL DE CITAS
-========================================= */
-.citas-divisor {
+/* Historial */
+.citas-divisor{
   border: none;
-  border-top: 2px solid #334155;
-  margin: 40px 0;
+  border-top: 1px solid rgba(255,255,255,0.10);
+  margin: 26px 0;
 }
 
-.historial-grid {
+.historial-grid{
   display: grid;
-  gap: 20px;
-  max-width: 800px;
+  gap: 14px;
+  max-width: 900px;
 }
 
-.historial-card {
-  background-color: #A304DE; /* Tarjeta morada */
-  padding: 20px 25px;
-  border-radius: 16px;
+.historial-card{
+  background: var(--glass);
+  border: 1px solid var(--border);
+  padding: 18px 18px;
+  border-radius: var(--radius);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease;
-  border-left: 6px solid #38bdf8; /* Borde azul claro para decorar */
+  gap: 14px;
+  box-shadow: var(--shadow);
+  transition: transform .15s ease, border-color .15s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.historial-card:hover {
-  transform: translateX(5px);
+/* línea decorativa a la izquierda */
+.historial-card::before{
+  content: "";
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--accent), var(--accent2));
 }
 
-.historial-header {
-  margin-bottom: 12px;
+.historial-card:hover{
+  transform: translateY(-3px);
+  border-color: rgba(255,255,255,0.16);
 }
 
-.mascota-nombre {
-  font-size: 1.4rem;
-  color: #ffffff;
+.mascota-nombre{
+  font-size: 1.25rem;
+  color: rgba(255,255,255,0.95);
 }
 
-.servicio-tipo {
-  color: #e2e8f0;
+.servicio-tipo{
+  color: rgba(255,255,255,0.75);
   margin-left: 10px;
-  font-size: 1rem;
+  font-size: 0.98rem;
 }
 
-.fecha-hora-container {
+.fecha-hora-container{
   display: flex;
-  gap: 20px;
+  gap: 14px;
   align-items: center;
-  font-size: 1rem;
-  margin-bottom: 10px;
+  font-size: 0.98rem;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
 }
 
-.cita-hora {
-  background-color: #1e293b; /* Fondo oscuro detrás de la hora para resaltar */
-  color: #38bdf8;
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-weight: bold;
+.cita-hora{
+  background: rgba(0,0,0,0.25);
+  color: var(--accent);
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-weight: 900;
+  border: 1px solid rgba(255,255,255,0.12);
 }
 
-.cita-dueno {
-  font-size: 0.9rem;
-  color: #e2e8f0;
+.cita-dueno{
+  font-size: 0.92rem;
+  color: rgba(255,255,255,0.72);
 }
 
-/* Botón Eliminar */
-.btn-eliminar {
-  background-color: #ef4444; /* Rojo peligro */
+/* Botón eliminar */
+.btn-eliminar{
+  background: rgba(239,68,68,0.92);
   color: #ffffff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
+  border: 0;
+  padding: 10px 14px;
+  border-radius: 12px;
   cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
+  font-weight: 900;
+  transition: opacity .15s ease, transform .15s ease;
+  white-space: nowrap;
 }
 
-.btn-eliminar:hover {
-  background-color: #dc2626;
+.btn-eliminar:hover{
+  opacity: 0.92;
+  transform: translateY(-1px);
 }
 
-/* Adaptación para pantallas pequeñas */
-@media (max-width: 600px) {
-  .historial-card {
+/* Responsive historial */
+@media (max-width: 650px){
+  .historial-card{
     flex-direction: column;
     align-items: flex-start;
-    gap: 20px;
   }
-  .btn-eliminar {
+  .btn-eliminar{
     width: 100%;
   }
 }
