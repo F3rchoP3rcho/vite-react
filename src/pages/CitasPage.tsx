@@ -61,7 +61,7 @@ export default function CitasPage() {
       if (response.ok) {
         alert("¡Cita agendada correctamente! 🐾");
         setServicioId(null); setFecha(""); setHora(""); setNombreCliente(""); setNombreMascota("");
-        cargarCitas(); // Recargar historial
+        cargarCitas();
       }
     } catch (error) {
       alert("Error de conexión al agendar");
@@ -72,7 +72,6 @@ export default function CitasPage() {
   // Eliminar Cita
   // ==========================================
   const eliminarCita = async (citaObjeto: any) => {
-    // Buscamos el ID dinámicamente por si cambia el nombre en la DB
     const id = citaObjeto.id || citaObjeto.id_citas || citaObjeto.id_cita;
 
     if (!id) {
@@ -88,7 +87,6 @@ export default function CitasPage() {
       });
 
       if (response.ok) {
-        // Filtramos el estado local para que desaparezca al instante
         setCitas(citas.filter((c) => (c.id || c.id_citas || c.id_cita) !== id));
       } else {
         alert("El servidor no pudo eliminar la cita.");
@@ -106,7 +104,7 @@ export default function CitasPage() {
       <form onSubmit={handleSubmit} style={{ maxWidth: "500px", margin: "20px 0 40px 0", display: "grid", gap: "15px" }}>
         <div>
           <label style={{ display: "block", marginBottom: "5px" }}>Servicio</label>
-          <select style={{ width: "100%", padding: "10px", borderRadius: "4px" }} value={servicioId ?? ""} onChange={(e) => setServicioId(Number(e.target.value))} required>
+          <select style={{ width: "100%", padding: "10px", borderRadius: "4px", color: "black" }} value={servicioId ?? ""} onChange={(e) => setServicioId(Number(e.target.value))} required>
             <option value="">Selecciona un servicio</option>
             {servicios.map(s => <option key={s.id_servicios} value={s.id_servicios}>{s.tipos_servicios}</option>)}
           </select>
@@ -115,22 +113,22 @@ export default function CitasPage() {
         <div style={{ display: "flex", gap: "10px" }}>
           <div style={{ flex: 1 }}>
             <label style={{ display: "block", marginBottom: "5px" }}>Fecha</label>
-            <input style={{ width: "100%", padding: "10px", borderRadius: "4px" }} type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
+            <input style={{ width: "100%", padding: "10px", borderRadius: "4px", color: "black" }} type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
           </div>
           <div style={{ flex: 1 }}>
             <label style={{ display: "block", marginBottom: "5px" }}>Hora</label>
-            <input style={{ width: "100%", padding: "10px", borderRadius: "4px" }} type="time" value={hora} onChange={(e) => setHora(e.target.value)} required />
+            <input style={{ width: "100%", padding: "10px", borderRadius: "4px", color: "black" }} type="time" value={hora} onChange={(e) => setHora(e.target.value)} required />
           </div>
         </div>
 
         <div>
           <label style={{ display: "block", marginBottom: "5px" }}>Nombre del dueño</label>
-          <input style={{ width: "100%", padding: "10px", borderRadius: "4px" }} type="text" placeholder="Tu nombre" value={nombreCliente} onChange={(e) => setNombreCliente(e.target.value)} required />
+          <input style={{ width: "100%", padding: "10px", borderRadius: "4px", color: "black" }} type="text" placeholder="Tu nombre" value={nombreCliente} onChange={(e) => setNombreCliente(e.target.value)} required />
         </div>
 
         <div>
           <label style={{ display: "block", marginBottom: "5px" }}>Nombre de la mascota</label>
-          <input style={{ width: "100%", padding: "10px", borderRadius: "4px" }} type="text" placeholder="Nombre del Milaneso" value={nombreMascota} onChange={(e) => setNombreMascota(e.target.value)} required />
+          <input style={{ width: "100%", padding: "10px", borderRadius: "4px", color: "black" }} type="text" placeholder="Nombre de la mascota" value={nombreMascota} onChange={(e) => setNombreMascota(e.target.value)} required />
         </div>
 
         <button type="submit" style={{ padding: "12px", background: "#3b82f6", color: "white", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "bold", fontSize: "1rem" }}>
@@ -151,27 +149,26 @@ export default function CitasPage() {
             return (
               <div 
                 key={index} 
-                style={{ border: "1px solid #334155", padding: "15px", borderRadius: "10px", display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "#1e293b", boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)" }}
+                style={{ border: "1px solid #334155", padding: "15px", borderRadius: "10px", display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "#1e293b" }}
               >
                 <div>
                   <strong style={{ fontSize: "1.2rem", color: "#38bdf8" }}>{cita.nombre_mascota}</strong>
                   <span style={{ color: "#94a3b8", marginLeft: "10px" }}>({cita.tipos_servicios || 'General'})</span>
                   
-                  <div style={{ marginTop: "8px", display: "flex", gap: "15px", fontSize: "0.95rem" }}>
+                  {/* AQUÍ ESTÁ EL CAMBIO: FECHA Y HORA JUNTAS */}
+                  <div style={{ marginTop: "8px", display: "flex", gap: "20px", fontSize: "1rem" }}>
                     <span>📅 {cita.fecha?.split('T')[0]}</span>
                     <span style={{ color: "#fbbf24", fontWeight: "bold" }}>⏰ {cita.hora}</span>
                   </div>
                   
-                  <div style={{ fontSize: "0.85rem", color: "#94a3b8", marginTop: "5px" }}>
+                  <div style={{ fontSize: "0.85rem", color: "#94a3b8", marginTop: "8px" }}>
                     👤 Dueño: <span style={{ color: "#e2e8f0" }}>{cita.nombre_cliente}</span>
                   </div>
                 </div>
 
                 <button 
                   onClick={() => eliminarCita(cita)}
-                  style={{ backgroundColor: "#ef4444", color: "white", border: "none", padding: "10px 15px", borderRadius: "6px", cursor: "pointer", transition: "0.2s", fontWeight: "500" }}
-                  onMouseOver={(e) => e.currentTarget.style.backgroundColor = "#dc2626"}
-                  onMouseOut={(e) => e.currentTarget.style.backgroundColor = "#ef4444"}
+                  style={{ backgroundColor: "#ef4444", color: "white", border: "none", padding: "10px 15px", borderRadius: "6px", cursor: "pointer", fontWeight: "bold" }}
                 >
                   Eliminar
                 </button>
