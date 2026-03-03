@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import "./guest.css";
+import "./Guest.css";
 
 type Servicio = {
   id_servicios: string | number;
