@@ -10,6 +10,7 @@ import EmpleadosPage from "./pages/EmpleadosPage";
 import ServiciosPage from "./pages/ServiciosPage.tsx";
 import LoginPage from "./pages/LoginPage.tsx";  
 import CitasPage from "./pages/CitasPage.tsx";
+import GuestCitasPage from "./pages/guest/GuestCitasPage.tsx";
 
 // ==========================================
 // EL GUARDIA DE SEGURIDAD (Ruta Protegida)
@@ -35,6 +36,7 @@ export default function App() {
       <Route path="/guest" element={<GuestLayout />}>
         <Route index element={<GuestHomePage />} />
         <Route path="servicios" element={<GuestServiciosPage />} />
+        <Route path="Citas" element={<GuestCitasPage />} />
       </Route>
 
       {/* 2. RUTAS PROTEGIDAS: Requieren inicio de sesión */}
