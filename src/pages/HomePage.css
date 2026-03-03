@@ -4,17 +4,17 @@
 :root {
   --fondo-oscuro: #1e293b; /* Fondo azul noche muy oscuro para dar contraste */
   --titulo-azul-claro: #38bdf8; /* Azul claro brillante para el título principal */
-  --texto-subtitulo: #94a3b8; /* Gris claro para el texto debajo del título principal */
+  --texto-subtitulo: #fefefe; /* Gris claro para el texto debajo del título principal */
   
-  --tarjeta-naranja-claro: #FF7A3B ; /* Naranja clarito (tono durazno suave) */
-  --tarjeta-titulo: #0284c7; /* Azul un poco más fuerte para que se lea sobre el naranja */
-  --tarjeta-texto: #334155; /* Gris oscuro para el texto de la tarjeta */
+  --tarjeta-naranja-claro: #b34f21 ; /* Naranja clarito (tono durazno suave) */
+  --tarjeta-titulo: #ffffff; /* Azul un poco más fuerte para que se lea sobre el naranja */
+  --tarjeta-texto: #ffffff; /* Gris oscuro para el texto de la tarjeta */
   
-  --boton-bg: #010202; /* Botón azul claro */
-  --boton-texto: #ffffff; /* Texto oscuro en el botón */
+  --boton-bg: #feffff; /* Botón azul claro */
+  --boton-texto: #000000; /* Texto oscuro en el botón */
   --boton-hover: #0284c7; /* Azul más oscuro al pasar el mouse */
 }
-
+ 
 /* =========================================
    CONTENEDOR PRINCIPAL
 ========================================= */
