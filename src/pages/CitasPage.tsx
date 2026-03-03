@@ -9,18 +9,20 @@ const API_URL = "https://veterinaria-steel.vercel.app/api";
 
 export default function CitasPage() {
   const [servicios, setServicios] = useState<Servicio[]>([]);
-  const [citas, setCitas] = useState<any[]>([]); // Usamos any temporalmente para investigar el objeto
+  const [citas, setCitas] = useState<any[]>([]);
   const [servicioId, setServicioId] = useState<number | null>(null);
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
   const [nombreCliente, setNombreCliente] = useState("");
   const [nombreMascota, setNombreMascota] = useState("");
 
+  // ==========================================
+  // Cargar datos (Servicios y Citas)
+  // ==========================================
   const cargarCitas = async () => {
     try {
       const res = await fetch(`${API_URL}/citas`);
       const data = await res.json();
-      console.log("Datos que llegan de la DB:", data); // ESTO NOS DIRÁ EL NOMBRE DEL ID
       setCitas(data);
     } catch (err) {
       console.error("Error cargando citas:", err);
@@ -28,16 +30,23 @@ export default function CitasPage() {
   };
 
   useEffect(() => {
-    fetch(`${API_URL}/infoservicios`).then(res => res.json()).then(setServicios);
+    fetch(`${API_URL}/infoservicios`)
+      .then((res) => res.json())
+      .then(setServicios)
+      .catch((err) => console.error("Error servicios:", err));
+
     cargarCitas();
   }, []);
 
+  // ==========================================
+  // Enviar formulario
+  // ==========================================
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (servicioId === null) return alert("Selecciona servicio");
+    if (servicioId === null) return alert("Selecciona un servicio");
 
     try {
-      const res = await fetch(`${API_URL}/citas`, {
+      const response = await fetch(`${API_URL}/citas`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -49,84 +58,127 @@ export default function CitasPage() {
         }),
       });
 
-      if (res.ok) {
-        alert("Cita agendada 🐾");
+      if (response.ok) {
+        alert("¡Cita agendada correctamente! 🐾");
         setServicioId(null); setFecha(""); setHora(""); setNombreCliente(""); setNombreMascota("");
-        cargarCitas();
+        cargarCitas(); // Recargar historial
       }
     } catch (error) {
-      alert("Error de conexión");
+      alert("Error de conexión al agendar");
     }
   };
 
+  // ==========================================
+  // Eliminar Cita
+  // ==========================================
   const eliminarCita = async (citaObjeto: any) => {
-    // Intentamos encontrar el ID buscando nombres comunes
+    // Buscamos el ID dinámicamente por si cambia el nombre en la DB
     const id = citaObjeto.id || citaObjeto.id_citas || citaObjeto.id_cita;
 
     if (!id) {
-      console.log("Objeto de la cita sin ID:", citaObjeto);
-      alert("Error: No se detecta un ID en el objeto. Revisa la consola.");
+      alert("No se pudo encontrar el ID de esta cita.");
       return;
     }
 
-    if (!confirm("¿Eliminar cita?")) return;
+    if (!confirm(`¿Estás seguro de eliminar la cita de ${citaObjeto.nombre_mascota}?`)) return;
 
     try {
-      const res = await fetch(`${API_URL}/citas/${id}`, { method: "DELETE" });
-      if (res.ok) {
-        setCitas(citas.filter(c => (c.id || c.id_citas || c.id_cita) !== id));
+      const response = await fetch(`${API_URL}/citas/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        // Filtramos el estado local para que desaparezca al instante
+        setCitas(citas.filter((c) => (c.id || c.id_citas || c.id_cita) !== id));
       } else {
-        alert("Error en el servidor al borrar");
+        alert("El servidor no pudo eliminar la cita.");
       }
     } catch (error) {
-      alert("Error de conexión");
+      alert("Error de conexión al eliminar.");
     }
   };
 
   return (
     <div style={{ padding: "2rem", color: "white", backgroundColor: "#0f172a", minHeight: "100vh", fontFamily: "sans-serif" }}>
-      <h2>Agendar Cita</h2>
+      <h2 style={{ borderBottom: "2px solid #3b82f6", paddingBottom: "10px", display: "inline-block" }}>Agendar Cita</h2>
       
-      <form onSubmit={handleSubmit} style={{ maxWidth: "500px", marginBottom: "3rem", display: "grid", gap: "10px" }}>
-        <label>Servicio</label>
-        <select value={servicioId ?? ""} onChange={(e) => setServicioId(Number(e.target.value))} required>
-          <option value="">Selecciona</option>
-          {servicios.map(s => <option key={s.id_servicios} value={s.id_servicios}>{s.tipos_servicios}</option>)}
-        </select>
+      {/* FORMULARIO */}
+      <form onSubmit={handleSubmit} style={{ maxWidth: "500px", margin: "20px 0 40px 0", display: "grid", gap: "15px" }}>
+        <div>
+          <label style={{ display: "block", marginBottom: "5px" }}>Servicio</label>
+          <select style={{ width: "100%", padding: "10px", borderRadius: "4px" }} value={servicioId ?? ""} onChange={(e) => setServicioId(Number(e.target.value))} required>
+            <option value="">Selecciona un servicio</option>
+            {servicios.map(s => <option key={s.id_servicios} value={s.id_servicios}>{s.tipos_servicios}</option>)}
+          </select>
+        </div>
 
-        <label>Fecha</label>
-        <input type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
+        <div style={{ display: "flex", gap: "10px" }}>
+          <div style={{ flex: 1 }}>
+            <label style={{ display: "block", marginBottom: "5px" }}>Fecha</label>
+            <input style={{ width: "100%", padding: "10px", borderRadius: "4px" }} type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
+          </div>
+          <div style={{ flex: 1 }}>
+            <label style={{ display: "block", marginBottom: "5px" }}>Hora</label>
+            <input style={{ width: "100%", padding: "10px", borderRadius: "4px" }} type="time" value={hora} onChange={(e) => setHora(e.target.value)} required />
+          </div>
+        </div>
 
-        <label>Hora</label>
-        <input type="time" value={hora} onChange={(e) => setHora(e.target.value)} required />
+        <div>
+          <label style={{ display: "block", marginBottom: "5px" }}>Nombre del dueño</label>
+          <input style={{ width: "100%", padding: "10px", borderRadius: "4px" }} type="text" placeholder="Tu nombre" value={nombreCliente} onChange={(e) => setNombreCliente(e.target.value)} required />
+        </div>
 
-        <label>Dueño</label>
-        <input type="text" value={nombreCliente} onChange={(e) => setNombreCliente(e.target.value)} required />
+        <div>
+          <label style={{ display: "block", marginBottom: "5px" }}>Nombre de la mascota</label>
+          <input style={{ width: "100%", padding: "10px", borderRadius: "4px" }} type="text" placeholder="Nombre del Milaneso" value={nombreMascota} onChange={(e) => setNombreMascota(e.target.value)} required />
+        </div>
 
-        <label>Mascota</label>
-        <input type="text" value={nombreMascota} onChange={(e) => setNombreMascota(e.target.value)} required />
-
-        <button type="submit" style={{ background: "#3b82f6", color: "white", padding: "10px", cursor: "pointer", border: "none" }}>Agendar</button>
+        <button type="submit" style={{ padding: "12px", background: "#3b82f6", color: "white", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "bold", fontSize: "1rem" }}>
+          Agendar Cita 🐾
+        </button>
       </form>
 
-      <hr />
+      <hr style={{ borderColor: "#334155", marginBottom: "30px" }} />
 
-      <h3>Historial</h3>
-      <div style={{ display: "grid", gap: "10px", marginTop: "1rem" }}>
-        {citas.map((cita, index) => (
-          <div key={index} style={{ border: "1px solid #334155", padding: "1rem", borderRadius: "8px", display: "flex", justifyContent: "space-between", backgroundColor: "#1e293b" }}>
-            <div>
-              <strong>{cita.nombre_mascota}</strong> - {cita.tipos_servicios}<br />
-              <small>📅 {cita.fecha?.split('T')[0]} | 👤 {cita.nombre_cliente}</small>
-            </div>
-            <button 
-              onClick={() => eliminarCita(cita)} // Pasamos TODO el objeto
-              style={{ background: "#ef4444", color: "white", border: "none", padding: "5px 10px", cursor: "pointer" }}
-            >
-              Eliminar
-            </button>
-          </div>
-        ))}
+      {/* HISTORIAL / AGENDA */}
+      <h3 style={{ marginBottom: "20px" }}>Historial de Citas</h3>
+      <div style={{ display: "grid", gap: "15px" }}>
+        {citas.length === 0 ? (
+          <p style={{ color: "#94a3b8" }}>No hay citas agendadas.</p>
+        ) : (
+          citas.map((cita, index) => {
+            const idParaBorrar = cita.id || cita.id_citas || cita.id_cita;
+            return (
+              <div 
+                key={index} 
+                style={{ border: "1px solid #334155", padding: "15px", borderRadius: "10px", display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "#1e293b", boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)" }}
+              >
+                <div>
+                  <strong style={{ fontSize: "1.2rem", color: "#38bdf8" }}>{cita.nombre_mascota}</strong>
+                  <span style={{ color: "#94a3b8", marginLeft: "10px" }}>({cita.tipos_servicios || 'General'})</span>
+                  
+                  <div style={{ marginTop: "8px", display: "flex", gap: "15px", fontSize: "0.95rem" }}>
+                    <span>📅 {cita.fecha?.split('T')[0]}</span>
+                    <span style={{ color: "#fbbf24", fontWeight: "bold" }}>⏰ {cita.hora}</span>
+                  </div>
+                  
+                  <div style={{ fontSize: "0.85rem", color: "#94a3b8", marginTop: "5px" }}>
+                    👤 Dueño: <span style={{ color: "#e2e8f0" }}>{cita.nombre_cliente}</span>
+                  </div>
+                </div>
+
+                <button 
+                  onClick={() => eliminarCita(cita)}
+                  style={{ backgroundColor: "#ef4444", color: "white", border: "none", padding: "10px 15px", borderRadius: "6px", cursor: "pointer", transition: "0.2s", fontWeight: "500" }}
+                  onMouseOver={(e) => e.currentTarget.style.backgroundColor = "#dc2626"}
+                  onMouseOut={(e) => e.currentTarget.style.backgroundColor = "#ef4444"}
+                >
+                  Eliminar
+                </button>
+              </div>
+            );
+          })
+        )}
       </div>
     </div>
   );
