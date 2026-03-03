@@ -112,3 +112,184 @@
   background-color: var(--boton-hover);
   color: #ffffff; /* El texto se vuelve blanco al pasar el mouse */
 }
+
+/* Heredamos variables de tu paleta principal para mantener consistencia */
+.citas-page {
+  background-color: #1e293b; /* Fondo oscuro */
+  min-height: 100vh;
+  padding: 50px 20px;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #ffffff;
+  box-sizing: border-box;
+}
+
+.citas-titulo {
+  color: #38bdf8; /* Azul claro para los títulos */
+  border-bottom: 2px solid #38bdf8;
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+  font-size: 2rem;
+}
+
+/* =========================================
+   FORMULARIO DE CITAS
+========================================= */
+.citas-form {
+  background-color: #A304DE; /* El morado vibrante de tus tarjetas */
+  padding: 30px;
+  border-radius: 16px;
+  max-width: 600px;
+  display: grid;
+  gap: 20px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+  margin-bottom: 40px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.form-control {
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background-color: #ffffff;
+  color: #000000;
+  font-size: 1rem;
+  outline: none;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 3px #38bdf8;
+}
+
+/* Botón del formulario */
+.btn-agendar {
+  background-color: #ffffff;
+  color: #000000;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.btn-agendar:hover {
+  background-color: #0284c7;
+  color: #ffffff;
+}
+
+/* =========================================
+   HISTORIAL DE CITAS
+========================================= */
+.citas-divisor {
+  border: none;
+  border-top: 2px solid #334155;
+  margin: 40px 0;
+}
+
+.historial-grid {
+  display: grid;
+  gap: 20px;
+  max-width: 800px;
+}
+
+.historial-card {
+  background-color: #A304DE; /* Tarjeta morada */
+  padding: 20px 25px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+  border-left: 6px solid #38bdf8; /* Borde azul claro para decorar */
+}
+
+.historial-card:hover {
+  transform: translateX(5px);
+}
+
+.historial-header {
+  margin-bottom: 12px;
+}
+
+.mascota-nombre {
+  font-size: 1.4rem;
+  color: #ffffff;
+}
+
+.servicio-tipo {
+  color: #e2e8f0;
+  margin-left: 10px;
+  font-size: 1rem;
+}
+
+.fecha-hora-container {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.cita-hora {
+  background-color: #1e293b; /* Fondo oscuro detrás de la hora para resaltar */
+  color: #38bdf8;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.cita-dueno {
+  font-size: 0.9rem;
+  color: #e2e8f0;
+}
+
+/* Botón Eliminar */
+.btn-eliminar {
+  background-color: #ef4444; /* Rojo peligro */
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-eliminar:hover {
+  background-color: #dc2626;
+}
+
+/* Adaptación para pantallas pequeñas */
+@media (max-width: 600px) {
+  .historial-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .btn-eliminar {
+    width: 100%;
+  }
+}

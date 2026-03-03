@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./HomePage.css";
 
 interface Servicio {
   id_servicios: number;
@@ -77,63 +78,102 @@ export default function CitasPage() {
   };
 
   return (
-    <div style={{ padding: "2rem", color: "white", backgroundColor: "#0f172a", minHeight: "100vh", fontFamily: "sans-serif" }}>
-      <h2 style={{ borderBottom: "2px solid #3b82f6", paddingBottom: "10px" }}>Agendar Cita</h2>
+    <div className="citas-page">
+      <h2 className="citas-titulo">Agendar Cita</h2>
       
       {/* FORMULARIO */}
-      <form onSubmit={handleSubmit} style={{ maxWidth: "500px", margin: "20px 0 40px 0", display: "grid", gap: "15px" }}>
-        <div>
-          <label style={{ display: "block", marginBottom: "5px" }}>Servicio</label>
-          <select style={{ width: "100%", padding: "10px", borderRadius: "4px", color: "black" }} value={servicioId ?? ""} onChange={(e) => setServicioId(Number(e.target.value))} required>
+      <form onSubmit={handleSubmit} className="citas-form">
+        <div className="form-group">
+          <label>Servicio</label>
+          <select 
+            className="form-control" 
+            value={servicioId ?? ""} 
+            onChange={(e) => setServicioId(Number(e.target.value))} 
+            required
+          >
             <option value="">Selecciona un servicio</option>
-            {servicios.map(s => <option key={s.id_servicios} value={s.id_servicios}>{s.tipos_servicios}</option>)}
+            {servicios.map(s => (
+              <option key={s.id_servicios} value={s.id_servicios}>{s.tipos_servicios}</option>
+            ))}
           </select>
         </div>
 
-        <div style={{ display: "flex", gap: "10px" }}>
-          <div style={{ flex: 1 }}>
-            <label style={{ display: "block", marginBottom: "5px" }}>Fecha</label>
-            <input style={{ width: "100%", padding: "10px", borderRadius: "4px", color: "black" }} type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
+        <div className="form-row">
+          <div className="form-group">
+            <label>Fecha</label>
+            <input 
+              className="form-control" 
+              type="date" 
+              value={fecha} 
+              onChange={(e) => setFecha(e.target.value)} 
+              required 
+            />
           </div>
-          <div style={{ flex: 1 }}>
-            <label style={{ display: "block", marginBottom: "5px" }}>Hora</label>
-            <input style={{ width: "100%", padding: "10px", borderRadius: "4px", color: "black" }} type="time" value={hora} onChange={(e) => setHora(e.target.value)} required />
+          <div className="form-group">
+            <label>Hora</label>
+            <input 
+              className="form-control" 
+              type="time" 
+              value={hora} 
+              onChange={(e) => setHora(e.target.value)} 
+              required 
+            />
           </div>
         </div>
 
-        <input style={{ padding: "10px", borderRadius: "4px", color: "black" }} type="text" placeholder="Nombre dueño" value={nombreCliente} onChange={(e) => setNombreCliente(e.target.value)} required />
-        <input style={{ padding: "10px", borderRadius: "4px", color: "black" }} type="text" placeholder="Nombre mascota" value={nombreMascota} onChange={(e) => setNombreMascota(e.target.value)} required />
+        <div className="form-group">
+          <label>Nombre del dueño</label>
+          <input 
+            className="form-control" 
+            type="text" 
+            placeholder="Ej: Juan Pérez" 
+            value={nombreCliente} 
+            onChange={(e) => setNombreCliente(e.target.value)} 
+            required 
+          />
+        </div>
+        
+        <div className="form-group">
+          <label>Nombre de la mascota</label>
+          <input 
+            className="form-control" 
+            type="text" 
+            placeholder="Ej: Firulais" 
+            value={nombreMascota} 
+            onChange={(e) => setNombreMascota(e.target.value)} 
+            required 
+          />
+        </div>
 
-        <button type="submit" style={{ padding: "12px", background: "#3b82f6", color: "white", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "bold" }}>
+        <button type="submit" className="btn-agendar">
           Agendar Cita 🐾
         </button>
       </form>
 
-      <hr style={{ borderColor: "#334155", marginBottom: "30px" }} />
+      <hr className="citas-divisor" />
 
-      {/* HISTORIAL CORREGIDO */}
-      <h3>Historial de Citas</h3>
-      <div style={{ display: "grid", gap: "15px", marginTop: "1rem" }}>
+      {/* HISTORIAL */}
+      <h3 className="citas-titulo">Historial de Citas</h3>
+      <div className="historial-grid">
         {citas.map((cita, index) => (
-          <div key={index} style={{ border: "1px solid #334155", padding: "15px", borderRadius: "10px", display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "#1e293b" }}>
-            <div>
-              <strong style={{ fontSize: "1.2rem", color: "#38bdf8" }}>{cita.nombre_mascota}</strong>
-              <span style={{ color: "#94a3b8", marginLeft: "10px" }}>({cita.tipos_servicios})</span>
-              
-              {/* LA HORA VA AQUÍ - COLOR AMARILLO PARA QUE SE VEA */}
-              <div style={{ marginTop: "8px", display: "flex", gap: "20px", fontSize: "1rem" }}>
-                <span>📅 {cita.fecha?.split('T')[0]}</span>
-                <span style={{ color: "#fbbf24", fontWeight: "bold", background: "#2d3748", padding: "2px 8px", borderRadius: "4px" }}>
-                   ⏰ {cita.hora || "Sin hora"} 
-                </span>
+          <div key={index} className="historial-card">
+            <div className="historial-info">
+              <div className="historial-header">
+                <strong className="mascota-nombre">{cita.nombre_mascota}</strong>
+                <span className="servicio-tipo">({cita.tipos_servicios})</span>
               </div>
               
-              <div style={{ fontSize: "0.85rem", color: "#94a3b8", marginTop: "8px" }}>
+              <div className="fecha-hora-container">
+                <span className="cita-fecha">📅 {cita.fecha?.split('T')[0]}</span>
+                <span className="cita-hora">⏰ {cita.hora || "Sin hora"}</span>
+              </div>
+              
+              <div className="cita-dueno">
                 👤 Dueño: {cita.nombre_cliente}
               </div>
             </div>
 
-            <button onClick={() => eliminarCita(cita)} style={{ backgroundColor: "#ef4444", color: "white", border: "none", padding: "10px 15px", borderRadius: "6px", cursor: "pointer" }}>
+            <button onClick={() => eliminarCita(cita)} className="btn-eliminar">
               Eliminar
             </button>
           </div>
