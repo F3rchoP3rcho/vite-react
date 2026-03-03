@@ -37,6 +37,12 @@ export default function HomePage() {
           <Link className="link" to="/servicios">Ir →</Link>
         </div>
 
+        <div className="card inner">
+          <h3 className="h3">Servicios</h3>
+          <p className="p">Agenda de citas.</p>
+          <Link className="link" to="/citas">Ir →</Link>
+        </div>
+
       </div>
     </div>
   );
