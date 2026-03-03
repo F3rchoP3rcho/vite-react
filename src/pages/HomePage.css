@@ -1,0 +1,110 @@
+/* =========================================
+   VARIABLES DE COLOR (Estilo Veterinaria)
+========================================= */
+:root {
+  --vet-primary: #0ea5e9; /* Turquesa/Azul médico */
+  --vet-primary-hover: #0284c7; /* Azul más oscuro para botones */
+  --vet-bg: #f0f9ff; /* Fondo general muy claro */
+  --vet-card-bg: #ffffff;
+  --vet-text-main: #334155;
+  --vet-text-muted: #64748b;
+}
+
+/* =========================================
+   CONTENEDOR PRINCIPAL
+========================================= */
+.page {
+  background-color: var(--vet-bg);
+  min-height: 100vh;
+  padding: 50px 20px;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: var(--vet-text-main);
+  box-sizing: border-box;
+}
+
+/* Títulos principales del Dashboard */
+.page > .h1 {
+  text-align: center;
+  color: #0f172a;
+  font-size: 2.5rem;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.page > .p {
+  text-align: center;
+  color: var(--vet-text-muted);
+  font-size: 1.1rem;
+  margin-bottom: 50px;
+}
+
+/* =========================================
+   GRID DE MÓDULOS
+========================================= */
+.grid {
+  display: grid;
+  /* Se adapta automáticamente a celulares o pantallas grandes */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  max-width: 1100px;
+  margin: 0 auto; /* Centra el grid en la pantalla */
+}
+
+/* =========================================
+   TARJETAS DE CADA MÓDULO (.card.inner)
+========================================= */
+.card.inner {
+  background-color: var(--vet-card-bg);
+  border-radius: 16px;
+  padding: 30px 25px;
+  /* Sombra suave */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  /* Línea decorativa arriba de cada tarjeta */
+  border-top: 5px solid var(--vet-primary); 
+}
+
+/* Efecto al pasar el mouse */
+.card.inner:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Título de la tarjeta (Ej: Animales, Empleados) */
+.card.inner .h3 {
+  color: var(--vet-primary);
+  font-size: 1.4rem;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+/* Texto de descripción de la tarjeta */
+.card.inner .p {
+  color: var(--vet-text-main);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  flex-grow: 1; /* Empuja el botón siempre hacia abajo para que queden alineados */
+}
+
+/* =========================================
+   BOTONES / ENLACES (.link)
+========================================= */
+.link {
+  display: inline-block;
+  text-align: center;
+  background-color: var(--vet-primary);
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  align-self: flex-start; /* Para que el botón no ocupe todo el ancho */
+}
+
+.link:hover {
+  background-color: var(--vet-primary-hover);
+}
