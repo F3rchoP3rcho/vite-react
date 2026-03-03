@@ -115,12 +115,11 @@ export default function CitasPage() {
         {/* Hora */}
         <label>Hora</label>
         <input
-          type="time"
-          value={hora}
-          onChange={(e) => setHora(e.target.value)}
-          required
-          min="09:00"
-          max="20:00"
+        type="time"
+        value={hora}
+        onChange={(e) => setHora(e.target.value)}
+        required
+        step="60"
         />
 
         <br /><br />
