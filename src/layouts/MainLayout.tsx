@@ -29,7 +29,7 @@ export default function MainLayout() {
         }}
       >
         <div className="container" style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{ fontWeight: 800, letterSpacing: -0.3 }}>Veterinaria</div>
+          <div style={{ fontWeight: 800, letterSpacing: -0.3 }}>PetCare-Admin</div>
 
           <nav style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
             <NavLink to="/" className="btn">Inicio</NavLink>
