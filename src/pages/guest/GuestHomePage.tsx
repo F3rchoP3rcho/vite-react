@@ -18,7 +18,7 @@ export default function GuestHomePage() {
           }}
         >
           <div>
-            <h1 className="guestHeroTitle">Veterinaria 🐶🐱</h1>
+            <h1 className="guestHeroTitle">PetCare 🐶🐱</h1>
             <p className="guestHeroText">
               Bienvenido a nuestra pequeña Veterinaria. Aquí puedes ver nuestra información general y horarios.<br /><br />
               Sabemos que tu mascota no es solo un animal, es parte esencial de tu familia
