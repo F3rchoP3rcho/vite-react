@@ -18,7 +18,7 @@ const FormularioUsuario: React.FC = () => {
     }
 
     try {
-      const URL_BACKEND = "https://veterinaria-steel.vercel.app/api/v1/login";
+      const URL_BACKEND = `${import.meta.env.VITE_API_URL}/v1/login`;
 
       const response = await fetch(URL_BACKEND, {
         method: "POST",

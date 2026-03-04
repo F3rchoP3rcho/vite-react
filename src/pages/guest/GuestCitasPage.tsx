@@ -6,7 +6,7 @@ interface Servicio {
   tipos_servicios: string;
 }
 
-const API_URL = "https://veterinaria-steel.vercel.app/api";
+const API_URL = import.meta.env.VITE_API_URL;
 
 // ✅ MISMA FUNCIÓN que ya tenían
 const horaAMinutos = (horaStr: string) => {

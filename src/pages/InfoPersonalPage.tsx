@@ -22,7 +22,7 @@ export default function InfoPersonalPage() {
         setError("");
         setLoading(true);
 
-        const res = await fetch("https://veterinaria-steel.vercel.app/api/infoPersonal");
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/infoPersonal`);
         if (!res.ok) throw new Error("Error al consultar la API de infoPersonal");
 
         const json: Personal[] = await res.json();

@@ -18,7 +18,7 @@ export default function GuestServiciosPage() {
   useEffect(() => {
     const consultar = async () => {
       try {
-        const res = await fetch("https://veterinaria-steel.vercel.app/api/infoservicios");
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/infoservicios`);
         if (!res.ok) throw new Error("Error al consultar la API");
         const json = await res.json();
 

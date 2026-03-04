@@ -24,7 +24,7 @@ export default function AnimalesPage() {
         setError("");
         setLoading(true);
 
-        const res = await fetch("https://veterinaria-steel.vercel.app/api/animales");
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/animales`);
         if (!res.ok) throw new Error("Error al consultar la API de animales");
 
         const json: Animal[] = await res.json();
